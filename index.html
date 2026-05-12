@@ -16,14 +16,11 @@
       --muted: #64748b;
       --border: #e2e8f0;
       --soft: #eff6ff;
-      --success: #16a34a;
       --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
       --radius: 22px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -243,6 +240,33 @@
 
     .tool-card p {
       margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .feature {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 8px 25px rgba(15,23,42,0.04);
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .feature span {
       color: var(--muted);
       line-height: 1.7;
       font-size: 14px;
@@ -481,33 +505,6 @@
       font-weight: 800;
     }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 22px;
-    }
-
-    .feature {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: 0 8px 25px rgba(15,23,42,0.04);
-    }
-
-    .feature strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 18px;
-    }
-
-    .feature span {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
     footer {
       padding: 40px 0;
       color: var(--muted);
@@ -593,14 +590,14 @@
       <div class="container">
         <div class="section-title">
           <h2>AI 工具中心</h2>
-          <p>不是单一发布工具，而是为产品内容、SEO、广告和店铺转化服务的工具系统。</p>
+          <p>为产品内容、SEO、广告创意和店铺转化打造的一站式 AI 工具系统。</p>
         </div>
 
         <div class="tools-grid">
           <div class="tool-card" onclick="setTool('listing')">
             <div class="icon">🛒</div>
             <h3>AI Listing 生成器</h3>
-            <p>根据简单产品信息生成完整亚马逊或 Shopify 产品 Listing。</p>
+            <p>根据产品信息生成完整亚马逊或 Shopify 产品 Listing。</p>
           </div>
 
           <div class="tool-card" onclick="setTool('title')">
@@ -624,7 +621,7 @@
           <div class="tool-card" onclick="setTool('detail')">
             <div class="icon">📄</div>
             <h3>详情页生成器</h3>
-            <p>生成独立站或 Shopify 可用的高级产品详情页内容。</p>
+            <p>生成独立站或 Shopify 可用的产品详情页内容。</p>
           </div>
 
           <div class="tool-card" onclick="setTool('keywords')">
@@ -651,24 +648,24 @@
     <section id="features" class="section">
       <div class="container">
         <div class="section-title">
-          <h2>为什么这版更像正式网站？</h2>
-          <p>加入上传图片、详情页预览、导出 HTML、工具切换和高级视觉设计。</p>
+          <h2>从产品素材到高转化页面，一站式完成</h2>
+          <p>帮助跨境卖家快速生成产品标题、卖点、详情页文案、SEO 关键词和视觉内容创意。</p>
         </div>
 
         <div class="features">
           <div class="feature">
-            <strong>上传产品图片</strong>
-            <span>用户可以上传多张产品图，系统会在页面中生成图片预览，并放入详情页展示。</span>
+            <strong>产品图片上传</strong>
+            <span>上传产品主图、细节图和场景图，快速生成可视化详情页预览，让内容展示更接近真实电商页面。</span>
           </div>
 
           <div class="feature">
-            <strong>生成详情页</strong>
-            <span>不只是生成一段文案，而是生成完整的产品详情页结构，包括主视觉、卖点、关键词和描述。</span>
+            <strong>详情页内容生成</strong>
+            <span>围绕产品卖点、使用场景、目标人群和购买理由，生成适合亚马逊、Shopify 和独立站使用的页面内容。</span>
           </div>
 
           <div class="feature">
-            <strong>支持导出 HTML</strong>
-            <span>生成后的详情页可以复制，也可以下载为 HTML 文件，方便后续放到独立站或页面编辑器里。</span>
+            <strong>SEO 与转化优化</strong>
+            <span>自动整理核心关键词、长尾关键词和买家搜索词，帮助产品页面提升搜索覆盖和购买转化率。</span>
           </div>
         </div>
       </div>
@@ -683,14 +680,14 @@
 
         <div class="app-panel">
           <div class="tabs">
-            <button class="tab active" data-tool="listing" onclick="setTool('listing')">列表</button>
+            <button class="tab active" data-tool="listing" onclick="setTool('listing')">Listing</button>
             <button class="tab" data-tool="title" onclick="setTool('title')">标题</button>
             <button class="tab" data-tool="bullets" onclick="setTool('bullets')">卖点</button>
             <button class="tab" data-tool="description" onclick="setTool('description')">描述</button>
             <button class="tab" data-tool="detail" onclick="setTool('detail')">详情页</button>
             <button class="tab" data-tool="keywords" onclick="setTool('keywords')">关键词</button>
             <button class="tab" data-tool="image" onclick="setTool('image')">图片提示</button>
-            <button class="tab" data-tool="competitor" onclick="setTool('competitor')">竞争者</button>
+            <button class="tab" data-tool="competitor" onclick="setTool('competitor')">竞品分析</button>
           </div>
 
           <div class="form-grid">
@@ -748,7 +745,7 @@
               <label class="upload-box">
                 <input id="imageUpload" type="file" accept="image/*" multiple />
                 <div class="upload-title">点击上传产品图片</div>
-                <div class="upload-note">支持多张图片。当前版本会在浏览器本地预览，不会上传到服务器。</div>
+                <div class="upload-note">支持上传多张产品图，用于生成详情页预览和内容参考。</div>
               </label>
               <div class="preview-images" id="previewImages"></div>
             </div>
@@ -773,7 +770,7 @@
                 <div class="product-page">
                   <div class="product-hero">
                     <h2>产品详情页将在这里生成</h2>
-                    <p>上传图片并填写产品信息后，这里会展示一个更像真实电商网站的详情页预览。</p>
+                    <p>上传图片并填写产品信息后，这里会自动生成产品详情页预览。</p>
                   </div>
                 </div>
               </div>
@@ -828,18 +825,17 @@
       return {
         name: document.getElementById("productName").value.trim() || "Premium Product",
         platform: document.getElementById("platform").value,
-        market: document.getElementById("market").value,
+ market: document.getElementById("market").value,
         tone: document.getElementById("tone").value,
         features: document.getElementById("featuresInput").value.trim() || "高品质材料，耐用设计，适合日常使用，提升生活效率。",
         keywords: document.getElementById("keywordsInput").value.trim() || "premium product, high quality, daily use"
-      };
+ };
     }
 
     function splitItems(text) {
       return text
         .split(/[,，\n]/)
-        .map(item => item.trim())
-        .filter(Boolean);
+        .map(item => item.trim        .filter(Boolean);
     }
 
     function generateContent() {
@@ -848,7 +844,7 @@
 
       if (currentTool === "title") {
         output = generateTitle(data);
-      } else if (currentTool === "bullets") {
+      } else (currentTool === "bullets") {
         output = generateBullets(data);
       } else if (currentTool === "description") {
         output = generateDescription(data);
@@ -858,13 +854,11 @@
         output = generateKeywords(data);
       } else if (currentTool === "image") {
         output = generateImagePrompts(data);
-      } else if (currentTool === "competitor") {
-        output = generateCompetitorAnalysis(data);
+      } else (currentTool === "competitor") {
+        output = generateCompetitor(data);
       } else {
         output = generateListing(data);
-      }
-
-      document.getElementById("result").textContent = output;
+           document.getElementById("result").textContent = output;
       renderDetailPreview(data);
     }
 
@@ -879,8 +873,8 @@ ${data.name} - ${data.tone} ${data.platform} 产品标题建议：
 
 标题优化建议：
 - 前半部分放核心关键词
-- 中间突出材质/功能/使用场景
-- 后半部分补充目标人群和使用价值
+- 中间突出材质、功能或使用场景
+- 后半部分补充目标人群和价值
 - 避免关键词堆砌，保持自然可读`;
     }
 
@@ -890,7 +884,7 @@ ${data.name} - ${data.tone} ${data.platform} 产品标题建议：
 
 1. 核心优势：${items[0] || "采用高品质设计"}，帮助用户获得更稳定、更可靠的使用体验。
 
-2. 使用场景：适合家庭、办公室、旅行、户外和日常生活等多种场景。
+2. 使用场景适合家庭、办公室、旅行、户外和日常生活等多种场景。
 
 3. 材质与品质：注重细节和耐用性，适合长期使用，提升产品价值感。
 
@@ -904,7 +898,8 @@ ${data.name} - ${data.tone} ${data.platform} 产品标题建议：
 
 ${data.name} 是一款面向 ${data.market} 市场的 ${data.tone} 产品，适合在 ${data.platform} 平台展示和销售。
 
-这款产品的核心特点包括：${data.features}
+这款产品的核心特点包括：
+${data.features}
 
 无论是日常使用、旅行出行、家庭生活还是办公场景，${data.name} 都可以为用户带来更方便、更舒适的体验。它不仅注重实用性，也兼顾外观和品质感，适合追求效率、品质和生活方式升级的消费者。
 
@@ -946,11 +941,11 @@ ${data.keywords}
 - 核心卖点卡片
 - 场景使用图
 - 详细参数
-- 买家常见问题
+- 买家见问题
 - 强转化购买按钮`;
     }
 
-    function generateKeywords(data) {
+    function generateKeywords) {
       const base = splitItems(data.keywords);
       const name = data.name.toLowerCase();
 
@@ -1020,7 +1015,7 @@ ${data.platform}
 1. 标题中突出核心关键词 + 使用场景
 2. 图片展示主图、细节图、场景图和对比图
 3. 卖点要写“用户能得到什么好处”
-4. 详情页增加高级视觉和模块化结构
+4. 详情页增加品牌感和模块化结构
 5. 描述中自然加入关键词：${data.keywords}
 
 建议定位：
@@ -1053,11 +1048,9 @@ ${generateKeywords(data)}`;
 
       const keywords = splitItems(data.keywords).slice(0, 8);
 
-      const gallery = images.slice(0, 6).map(src => `<img src="${src}" alt="${data.name}">`).join("");
-
-      const bullets = featureItems.map(item => `<li>✅ ${item}</li>`).join("");
-
-      const pills = keywords.map(item => `<span class="pill">${item}</span>`).join("");
+      const gallery = images.slice(0, 6).map(src => `<img src="${src}" alt="${escapeHTML(data.name)}">`).join("");
+      const bullets = featureItems.map(item => `<li>✅ ${escapeHTML(item)}</li>`).join("");
+      const pills = keywords.map(item => `<span class="pill">${escapeHTML(item)}</span>`).join("");
 
       lastDetailHTML = `
 <div class="product-page">
@@ -1162,7 +1155,7 @@ ${lastDetailHTML}
         <div class="product-page">
           <div class="product-hero">
             <h2>产品详情页将在这里生成</h2>
-            <p>上传图片并填写产品信息后，这里会展示一个更像真实电商网站的详情页预览。</p>
+            <p>上传图片并填写产品信息后，这里会自动生成产品详情页预览。</p>
           </div>
         </div>`;
       uploadedImages = [];
