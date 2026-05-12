@@ -1,352 +1,977 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ListingAI - 跨境电商 Listing 智能优化工具</title>
-  <meta name="description" content="ListingAI 帮助亚马逊、独立站、Temu、TikTok Shop 卖家快速生成高转化商品标题、五点描述、关键词和卖点文案。" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>AI Seller Tools - AI Tools for E-commerce Sellers</title>
+  <meta name="description" content="AI tools for Amazon, Shopify, Etsy and TikTok Shop sellers. Generate product listings, titles, bullet points, descriptions, keywords, image prompts and detail pages." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f6f8fb;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .navbar {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e9f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      color: #ffffff;
+      padding: 82px 20px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #e8edff;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 22px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #1d4ed8;
+    }
+
+    .btn-primary:hover {
+      background: #eff6ff;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .section-title h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .section-title p {
+      color: #6b7280;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.04);
+      transition: 0.22s;
+      cursor: pointer;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(15,23,42,0.09);
+      border-color: #bfdbfe;
+    }
+
+    .tool-icon {
+      width: 44px;
+      height: 44px;
+      background: #eff6ff;
+      color: #2563eb;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .tool-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .tool-card p {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .generator-box {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.06);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+      padding-bottom: 4px;
+    }
+
+    .tab-btn {
+      white-space: nowrap;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+      color: #334155;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 12px 13px;
+      font-size: 15px;
+      outline: none;
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+
+    .generate-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .generate-btn {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .generate-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .clear-btn {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .clear-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .result-box {
+      margin-top: 24px;
+      background: #0f172a;
+      color: #e5e7eb;
+      border-radius: 16px;
+      padding: 22px;
+      min-height: 160px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      overflow-x: auto;
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .copy-btn:hover {
+      background: #059669;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #e5e7eb;
+      padding: 24px;
+    }
+
+    .feature h3 {
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .feature p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    .faq {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .faq-item h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      color: #6b7280;
+    }
+
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 34px 20px;
+      margin-top: 30px;
+    }
+
+    .footer strong {
+      color: #ffffff;
+    }
+
+    @media (max-width: 980px) {
+      .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 58px 18px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 44px 18px;
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-slate-950 text-white">
-  <!-- Header -->
-  <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-9 h-9 rounded-xl bg-blue-500 flex items-center justify-center font-bold">L</div>
-        <span class="text-xl font-bold">ListingAI</span>
-      </div>
+<body>
 
-      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300">
-        <a href="#features" class="hover:text-white">功能</a>
-        <a href="#demo" class="hover:text-white">体验 Demo</a>
-        <a href="#pricing" class="hover:text-white">价格</a>
-        <a href="#faq" class="hover:text-white">FAQ</a>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">AI Seller Tools</a>
+      <nav class="nav-links">
+        <a href="#tools">Tools</a>
+        <a href="#generator">Generator</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
       </nav>
-
-      <a href="#demo" class="bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl font-medium">
-        免费试用
-      </a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-blue-500/10 text-blue-300 px-4 py-2 rounded-full text-sm mb-6">
-        🚀 专为跨境卖家打造的 AI Listing 工具
-      </div>
-
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-        30 秒生成高转化
-        <span class="text-blue-400">商品 Listing</span>
-      </h1>
-
-      <p class="mt-6 text-lg text-slate-300 leading-relaxed">
-        输入产品信息，AI 自动生成亚马逊标题、五点描述、搜索关键词、卖点文案和优化建议。
-        适合 Amazon、Shopify、TikTok Shop、Temu、eBay 等跨境电商卖家。
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge">AI Tools for Amazon, Shopify, Etsy and TikTok Shop Sellers</div>
+      <h1>Generate Better Product Listings, Pages, Keywords and Image Prompts</h1>
+      <p>
+        A practical AI toolkit for e-commerce sellers. Create product titles, bullet points,
+        descriptions, detail pages, keywords, image prompts and competitor analysis in seconds.
       </p>
-
-      <div class="mt-8 flex flex-col sm:flex-row gap-4">
-        <a href="#demo" class="bg-blue-500 hover:bg-blue-600 text-center px-7 py-4 rounded-xl font-bold">
-          立即生成 Listing
-        </a>
-        <a href="#pricing" class="border border-white/20 hover:bg-white/10 text-center px-7 py-4 rounded-xl font-bold">
-          查看价格
-        </a>
-      </div>
-
-      <div class="mt-8 grid grid-cols-3 gap-6 text-center">
-        <div>
-          <div class="text-3xl font-bold text-blue-400">30s</div>
-          <div class="text-sm text-slate-400">生成文案</div>
-        </div>
-        <div>
-          <div class="text-3xl font-bold text-blue-400">5+</div>
-          <div class="text-sm text-slate-400">平台适配</div>
-        </div>
-        <div>
-          <div class="text-3xl font-bold text-blue-400">80%</div>
-          <div class="text-sm text-slate-400">节省时间</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white/5 border border-white/10 rounded-3xl p-6 shadow-2xl">
-      <div class="bg-slate-900 rounded-2xl p-5">
-        <div class="flex gap-2 mb-4">
-          <span class="w-3 h-3 rounded-full bg-red-400"></span>
-          <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-          <span class="w-3 h-3 rounded-full bg-green-400"></span>
-        </div>
-
-        <div class="space-y-4">
-          <div class="bg-slate-800 p-4 rounded-xl">
-            <div class="text-xs text-slate-400 mb-2">输入产品</div>
-            <div class="text-slate-200">无线蓝牙耳机，降噪，适合运动，续航 40 小时</div>
-          </div>
-
-          <div class="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl">
-            <div class="text-xs text-blue-300 mb-2">AI 生成标题</div>
-            <div class="text-slate-100 font-medium">
-              Wireless Bluetooth Earbuds with Noise Cancelling, 40H Playtime Sports Headphones...
-            </div>
-          </div>
-
-          <div class="bg-slate-800 p-4 rounded-xl">
-            <div class="text-xs text-slate-400 mb-2">优化建议</div>
-            <ul class="text-sm text-slate-300 space-y-2">
-              <li>✅ 标题加入核心关键词：Bluetooth Earbuds</li>
-              <li>✅ 强调续航卖点：40H Playtime</li>
-              <li>✅ 增加场景词：Sports / Workout / Running</li>
-            </ul>
-          </div>
-        </div>
+      <div class="hero-buttons">
+        <a href="#generator" class="btn btn-primary">Start Generating</a>
+        <a href="#tools" class="btn btn-secondary">Explore Tools</a>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-14">
-      <h2 class="text-3xl md:text-4xl font-bold">卖家真正需要的功能</h2>
-      <p class="text-slate-400 mt-4">不是聊天机器人，而是直接帮你产出可用的商品页面内容。</p>
+  <section class="section" id="tools">
+    <div class="section-title">
+      <h2>All-in-One AI Seller Toolkit</h2>
+      <p>
+        Instead of a single listing tool, this website gives sellers multiple tools for product content,
+        SEO, advertising and store conversion.
+      </p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">📝</div>
-        <h3 class="text-xl font-bold mb-3">标题生成</h3>
-        <p class="text-slate-400">根据产品特点自动生成符合平台规则的 SEO 标题。</p>
+    <div class="tool-grid">
+      <div class="tool-card" onclick="selectTool('listing')">
+        <div class="tool-icon">🛒</div>
+        <h3>AI Listing Generator</h3>
+        <p>Generate complete Amazon or Shopify product listings from simple product information.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">🔥</div>
-        <h3 class="text-xl font-bold mb-3">五点描述</h3>
-        <p class="text-slate-400">自动提炼卖点，生成更适合转化的 Bullet Points。</p>
+      <div class="tool-card" onclick="selectTool('title')">
+        <div class="tool-icon">🏷️</div>
+        <h3>Product Title Generator</h3>
+        <p>Create SEO-friendly, high-converting product titles for multiple platforms.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">🔍</div>
-        <h3 class="text-xl font-bold mb-3">关键词优化</h3>
-        <p class="text-slate-400">生成前台关键词和后台 Search Terms，提高搜索曝光。</p>
+      <div class="tool-card" onclick="selectTool('bullets')">
+        <div class="tool-icon">✅</div>
+        <h3>Bullet Points Generator</h3>
+        <p>Turn product features into persuasive selling points and Amazon bullet points.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">🌍</div>
-        <h3 class="text-xl font-bold mb-3">多语言适配</h3>
-        <p class="text-slate-400">支持英文、德语、法语、西语、日语等跨境主流市场。</p>
+      <div class="tool-card" onclick="selectTool('description')">
+        <div class="tool-icon">📝</div>
+        <h3>Description Generator</h3>
+        <p>Write product descriptions that explain benefits, use cases and purchase reasons.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">📊</div>
-        <h3 class="text-xl font-bold mb-3">竞品分析</h3>
-        <p class="text-slate-400">输入竞品链接，AI 总结对方卖点并给出差异化建议。</p>
+      <div class="tool-card" onclick="selectTool('detail')">
+        <div class="tool-icon">📄</div>
+        <h3>Detail Page Generator</h3>
+        <p>Generate product page sections for Shopify, landing pages and Amazon A+ content.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div class="text-3xl mb-4">⚡</div>
-        <h3 class="text-xl font-bold mb-3">批量生成</h3>
-        <p class="text-slate-400">适合铺货型卖家，一次处理多个 SKU，节省大量时间。</p>
+      <div class="tool-card" onclick="selectTool('keywords')">
+        <div class="tool-icon">🔍</div>
+        <h3>Keyword Generator</h3>
+        <p>Generate core keywords, long-tail keywords, audience keywords and use-case terms.</p>
+      </div>
+
+      <div class="tool-card" onclick="selectTool('image')">
+        <div class="tool-icon">🎨</div>
+        <h3>AI Image Prompt Generator</h3>
+        <p>Create product photography prompts for lifestyle images, ads and social media creatives.</p>
+      </div>
+
+      <div class="tool-card" onclick="selectTool('competitor')">
+        <div class="tool-icon">📊</div>
+        <h3>Competitor Analyzer</h3>
+        <p>Analyze competitor listings and find title structure, selling points and improvement ideas.</p>
       </div>
     </div>
   </section>
 
-  <!-- Demo -->
-  <section id="demo" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="grid lg:grid-cols-2 gap-8">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">免费体验 Demo</h2>
-        <p class="text-slate-400 mb-8">
-          输入你的产品信息，点击生成。当前版本为前端演示版，后续可接入 OpenAI / Claude / Gemini API 实现真实 AI 生成。
-        </p>
+  <section class="section" id="generator">
+    <div class="section-title">
+      <h2>AI Tool Generator</h2>
+      <p>
+        Choose a tool, enter your product information, and generate ready-to-use e-commerce content.
+      </p>
+    </div>
 
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-          <div>
-            <label class="block text-sm text-slate-300 mb-2">产品名称</label>
-            <input id="productName" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500" placeholder="例如：无线蓝牙耳机" />
-          </div>
+    <div class="generator-box">
+      <div class="tabs">
+        <button class="tab-btn active" data-tool="listing" onclick="selectTool('listing')">Listing</button>
+        <button class="tab-btn" data-tool="title" onclick="selectTool('title')">Title</button>
+        <button class="tab-btn" data-tool="bullets" onclick="selectTool('bullets')">Bullets</button>
+        <button class="tab-btn" data-tool="description" onclick="selectTool('description')">Description</button>
+        <button class="tab-btn" data-tool="detail" onclick="selectTool('detail')">Detail Page</button>
+        <button class="tab-btn" data-tool="keywords" onclick="selectTool('keywords')">Keywords</button>
+        <button class="tab-btn" data-tool="image" onclick="selectTool('image')">Image Prompt</button>
+        <button class="tab-btn" data-tool="competitor" onclick="selectTool('competitor')">Competitor</button>
+      </div>
 
-          <div>
-            <label class="block text-sm text-slate-300 mb-2">产品卖点</label>
-            <textarea id="featuresInput" rows="5" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500" placeholder="例如：主动降噪、40小时续航、防水、适合运动、低延迟"></textarea>
-          </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input id="productName" type="text" placeholder="Example: Stainless Steel Water Bottle" />
+        </div>
 
-          <div>
-            <label class="block text-sm text-slate-300 mb-2">目标平台</label>
-            <select id="platform" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500">
-              <option>Amazon</option>
-              <option>Shopify</option>
-              <option>TikTok Shop</option>
-              <option>Temu</option>
-              <option>eBay</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label>Target Platform</label>
+          <select id="platform">
+            <option>Amazon</option>
+            <option>Shopify</option>
+            <option>Etsy</option>
+            <option>eBay</option>
+            <option>TikTok Shop</option>
+            <option>Temu</option>
+          </select>
+        </div>
 
-          <button onclick="generateListing()" class="w-full bg-blue-500 hover:bg-blue-600 px-6 py-4 rounded-xl font-bold">
-            生成 Listing
-          </button>
+        <div class="form-group">
+          <label>Target Market / Language</label>
+          <select id="language">
+            <option>English - United States</option>
+            <option>English - United Kingdom</option>
+            <option>German</option>
+            <option>French</option>
+            <option>Spanish</option>
+            <option>Italian</option>
+            <option>Japanese</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Writing Tone</label>
+          <select id="tone">
+            <option>Professional</option>
+            <option>Premium</option>
+            <option>Friendly</option>
+            <option>Persuasive</option>
+            <option>Minimalist</option>
+            <option>Luxury</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label>Product Features / Selling Points</label>
+          <textarea id="featuresInput" placeholder="Example: 24-hour cold retention, leak-proof lid, BPA-free, suitable for gym, travel and office"></textarea>
+        </div>
+
+        <div class="form-group full">
+          <label>Keywords / Competitor Listing / Extra Information</label>
+          <textarea id="extraInput" placeholder="Example: insulated water bottle, stainless steel bottle, gym bottle, travel bottle"></textarea>
         </div>
       </div>
 
-      <div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 min-h-[520px]">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-xl font-bold">生成结果</h3>
-            <button onclick="copyResult()" class="text-sm bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg">
-              复制
-            </button>
-          </div>
+      <div class="generate-row">
+        <button class="btn generate-btn" onclick="generateContent()">Generate Content</button>
+        <button class="btn clear-btn" onclick="clearForm()">Clear</button>
+      </div>
 
-          <div id="result" class="text-slate-300 whitespace-pre-wrap leading-relaxed">
-请在左侧输入产品信息，然后点击“生成 Listing”。
-          </div>
-        </div>
+      <div class="result-box" id="resultBox">Your generated content will appear here.</div>
+      <button class="btn copy-btn" onclick="copyResult()">Copy Result</button>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="section-title">
+      <h2>Why Sellers Use These Tools</h2>
+      <p>
+        Built for speed, content quality and e-commerce conversion.
+      </p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Save Time</h3>
+        <p>Create product content quickly instead of writing every listing, title and description manually.</p>
+      </div>
+
+      <div class="feature">
+        <h3>Improve Conversion</h3>
+        <p>Generate copy that focuses on product benefits, customer pain points and purchase reasons.</p>
+      </div>
+
+      <div class="feature">
+        <h3>Support Multiple Platforms</h3>
+        <p>Use it for Amazon, Shopify, Etsy, TikTok Shop, eBay and other e-commerce channels.</p>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-14">
-      <h2 class="text-3xl md:text-4xl font-bold">简单透明的价格</h2>
-      <p class="text-slate-400 mt-4">先用免费版验证需求，再升级到专业版。</p>
+  <section class="section" id="faq">
+    <div class="section-title">
+      <h2>FAQ</h2>
+      <p>Common questions about the AI Seller Tools website.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
-        <h3 class="text-xl font-bold">Free</h3>
-        <div class="text-4xl font-extrabold mt-4">$0</div>
-        <p class="text-slate-400 mt-2">适合试用</p>
-        <ul class="mt-6 space-y-3 text-slate-300">
-          <li>✅ 每月 3 次生成</li>
-          <li>✅ 基础标题生成</li>
-          <li>✅ 基础五点描述</li>
-        </ul>
-        <a href="#demo" class="block text-center mt-8 border border-white/20 hover:bg-white/10 py-3 rounded-xl font-bold">
-          免费开始
-        </a>
+    <div class="faq">
+      <div class="faq-item">
+        <h3>Is this a real AI generator?</h3>
+        <p>This first version is a front-end demo generator. It creates structured sample content. Later it can be connected to OpenAI, DeepSeek, Claude or other AI APIs.</p>
       </div>
 
-      <div class="bg-blue-500/10 border border-blue-500 rounded-2xl p-8 relative">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 px-4 py-1 rounded-full text-sm font-bold">
-          推荐
-        </div>
-        <h3 class="text-xl font-bold">Pro</h3>
-        <div class="text-4xl font-extrabold mt-4">$29<span class="text-base text-slate-400">/月</span></div>
-        <p class="text-slate-400 mt-2">适合中小卖家</p>
-        <ul class="mt-6 space-y-3 text-slate-300">
-          <li>✅ 每月 100 次生成</li>
-          <li>✅ 关键词优化</li>
-          <li>✅ 多平台适配</li>
-          <li>✅ 多语言生成</li>
-        </ul>
-        <a href="mailto:hutugo103@gmail.com?subject=我想开通 ListingAI Pro" class="block text-center mt-8 bg-blue-500 hover:bg-blue-600 py-3 rounded-xl font-bold">
-          联系开通
-        </a>
+      <div class="faq-item">
+        <h3>Can I use it for Amazon listings?</h3>
+        <p>Yes. It includes listing titles, bullet points, descriptions, keywords and product page content suitable for Amazon sellers.</p>
       </div>
 
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
-        <h3 class="text-xl font-bold">Business</h3>
-        <div class="text-4xl font-extrabold mt-4">$99<span class="text-base text-slate-400">/月</span></div>
-        <p class="text-slate-400 mt-2">适合团队和铺货卖家</p>
-        <ul class="mt-6 space-y-3 text-slate-300">
-          <li>✅ 无限生成</li>
-          <li>✅ 竞品分析</li>
-          <li>✅ 批量 SKU 处理</li>
-          <li>✅ 团队账号</li>
-        </ul>
-        <a href="mailto:hutugo103@gmail.com?subject=我想开通 ListingAI Business" class="block text-center mt-8 border border-white/20 hover:bg-white/10 py-3 rounded-xl font-bold">
-          联系销售
-        </a>
+      <div class="faq-item">
+        <h3>Can it generate product images?</h3>
+        <p>This version generates AI image prompts. To generate real images, the site needs to connect to an image generation API.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can this become a paid SaaS website?</h3>
+        <p>Yes. The next step is to add real AI API calls, user accounts, usage limits, payment plans and saved history.</p>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section id="faq" class="max-w-4xl mx-auto px-6 py-20">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">常见问题</h2>
-
-    <div class="space-y-4">
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <h3 class="font-bold mb-2">这个工具适合谁？</h3>
-        <p class="text-slate-400">适合亚马逊、Shopify、TikTok Shop、Temu、eBay 等跨境电商卖家，尤其适合需要频繁上新品的卖家。</p>
-      </div>
-
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <h3 class="font-bold mb-2">现在是真 AI 生成吗？</h3>
-        <p class="text-slate-400">当前页面是 MVP 演示版。后续可以接入 OpenAI、Claude、Gemini 或国内大模型 API，实现真实 AI 生成。</p>
-      </div>
-
-      <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <h3 class="font-bold mb-2">怎么盈利？</h3>
-        <p class="text-slate-400">主要通过订阅收费：Free 免费试用，Pro 每月 $29，Business 每月 $99，也可以加入代写 Listing 服务。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="border-t border-white/10 py-10">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4 text-slate-400">
-      <div>© 2025 ListingAI. All rights reserved.</div>
-      <div class="flex gap-6">
-        <a href="mailto:hutugo103@gmail.com" class="hover:text-white">联系我们</a>
-        <a href="#pricing" class="hover:text-white">价格</a>
-        <a href="#demo" class="hover:text-white">免费试用</a>
-      </div>
-    </div>
+  <footer class="footer">
+    <p><strong>AI Seller Tools</strong> - AI tools for e-commerce sellers.</p>
+    <p>Generate listings, titles, descriptions, keywords, image prompts and product pages faster.</p>
   </footer>
 
   <script>
-    function generateListing() {
-      const productName = document.getElementById("productName").value.trim();
-      const features = document.getElementById("featuresInput").value.trim();
-      const platform = document.getElementById("platform").value;
-      const result = document.getElementById("result");
+    let currentTool = "listing";
 
-      if (!productName || !features) {
-        alert("请先填写产品名称和产品卖点");
-        return;
+    function selectTool(tool) {
+      currentTool = tool;
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      const activeBtn = document.querySelector('.tab-btn[data-tool="' + tool + '"]');
+      if (activeBtn) {
+        activeBtn.classList.add("active");
       }
 
-      result.innerText = "AI 正在生成中...";
+      document.getElementById("generator").scrollIntoView({ behavior: "smooth" });
 
-      setTimeout(() => {
-        result.innerText =
-`平台：${platform}
+      const resultBox = document.getElementById("resultBox");
+      resultBox.textContent = "Selected tool: " + getToolName(tool) + "\n\nEnter your product information and click Generate Content.";
+    }
 
-产品：${productName}
+    function getToolName(tool) {
+      const names = {
+        listing: "AI Listing Generator",
+        title: "Product Title Generator",
+        bullets: "Bullet Points Generator",
+        description: "Product Description Generator",
+        detail: "Product Detail Page Generator",
+        keywords: "Keyword Generator",
+        image: "AI Image Prompt Generator",
+        competitor: "Competitor Listing Analyzer"
+      };
+      return names[tool] || "AI Tool";
+    }
 
-【SEO 标题】
-${productName} for ${platform}, Premium Quality, High Performance, Durable Design, Ideal for Daily Use and Gift Choice
+    function getValues() {
+      return {
+        productName: document.getElementById("productName").value.trim() || "Your Product",
+        platform: document.getElementById("platform").value,
+        language: document.getElementById("language").value,
+        tone: document.getElementById("tone").value,
+        features: document.getElementById("featuresInput").value.trim() || "high quality, easy to use, durable design, suitable for daily use",
+        extra: document.getElementById("extraInput").value.trim() || "main keyword, long-tail keyword, customer search terms"
+      };
+    }
 
-【五点描述】
-1. 核心卖点突出：${features.split("、")[0] || "高品质设计"}，帮助用户快速理解产品价值。
-2. 使用场景明确：适合家庭、办公、户外、旅行、运动等多种场景。
-3. 转化导向文案：强调解决用户痛点，提高点击率和购买转化。
-4. 品质感表达：突出耐用、便携、舒适、安全等消费者关心的因素。
-5. 送礼属性：适合作为节日礼物、生日礼物或日常实用好物。
+    function generateContent() {
+      const v = getValues();
+      let output = "";
 
-【搜索关键词】
-${productName}, best ${productName}, ${platform} product, premium ${productName}, gift for family, daily use, portable, durable
+      if (currentTool === "listing") {
+        output = generateListing(v);
+      } else if (currentTool === "title") {
+        output = generateTitle(v);
+      } else if (currentTool === "bullets") {
+        output = generateBullets(v);
+      } else if (currentTool === "description") {
+        output = generateDescription(v);
+      } else if (currentTool === "detail") {
+        output = generateDetailPage(v);
+      } else if (currentTool === "keywords") {
+        output = generateKeywords(v);
+      } else if (currentTool === "image") {
+        output = generateImagePrompt(v);
+      } else if (currentTool === "competitor") {
+        output = generateCompetitorAnalysis(v);
+      }
 
-【产品描述】
-这款 ${productName} 专为追求品质和实用性的用户打造。它结合了 ${features} 等核心优势，能够满足多种使用需求。无论是日常使用、工作场景，还是作为礼物赠送，都具有较强的吸引力。
+      document.getElementById("resultBox").textContent = output;
+    }
 
-【优化建议】
-✅ 标题中加入核心关键词，提高搜索曝光。
-✅ 五点描述前 2 条应放最强卖点。
-✅ 文案要减少空泛描述，多写具体场景。
-✅ 可以在图片中加入使用场景和对比图。
-✅ 如果投放广告，建议重点测试核心关键词和长尾关键词。`;
-      }, 900);
+    function generateListing(v) {
+      return `AI LISTING GENERATOR
+Platform: ${v.platform}
+Language: ${v.language}
+Tone: ${v.tone}
+
+PRODUCT TITLE:
+${v.productName} for Daily Use, Premium Quality, Durable Design, Easy to Carry, Ideal for Home, Office, Travel and Gifts
+
+BULLET POINTS:
+1. Premium Quality Design - ${v.productName} is made for customers who want reliable performance, practical use and a better daily experience.
+2. Built for Everyday Convenience - Designed with useful features such as ${v.features}, making it suitable for different situations.
+3. Ideal for Multiple Scenarios - Perfect for home, office, travel, outdoor activities, gifting and personal use.
+4. Customer-Focused Benefits - Helps solve common customer problems by offering comfort, durability, ease of use and long-term value.
+5. Great Gift Choice - A practical and thoughtful product for family, friends, colleagues or anyone who values quality and convenience.
+
+PRODUCT DESCRIPTION:
+Upgrade your daily routine with ${v.productName}. Designed with ${v.features}, this product combines practical function with a clean and modern user experience. Whether you are using it at home, in the office, during travel or as a gift, it provides dependable performance and everyday convenience.
+
+SEARCH KEYWORDS:
+${v.extra}, ${v.productName.toLowerCase()}, premium ${v.productName.toLowerCase()}, best ${v.productName.toLowerCase()}, ${v.productName.toLowerCase()} for home, ${v.productName.toLowerCase()} for travel`;
+    }
+
+    function generateTitle(v) {
+      return `PRODUCT TITLE GENERATOR
+Platform: ${v.platform}
+Tone: ${v.tone}
+
+TITLE OPTION 1:
+${v.productName} with Premium Design, Durable and Easy to Use, Ideal for Home, Office, Travel and Everyday Use
+
+TITLE OPTION 2:
+${v.productName} for ${v.platform} Shoppers, High Quality, Practical, Lightweight, Giftable and Built for Daily Convenience
+
+TITLE OPTION 3:
+Premium ${v.productName}, Reliable Everyday Product with ${v.features}, Great for Personal Use and Gift Giving
+
+TITLE STRUCTURE:
+Main Keyword + Core Feature + Customer Benefit + Use Scenario + Audience
+
+SUGGESTED KEYWORDS:
+${v.extra}`;
+    }
+
+    function generateBullets(v) {
+      return `BULLET POINTS GENERATOR
+Product: ${v.productName}
+Platform: ${v.platform}
+
+1. HIGH-QUALITY PERFORMANCE
+${v.productName} is designed to provide a dependable and smooth user experience for customers who care about quality and convenience.
+
+2. PRACTICAL EVERYDAY USE
+With features such as ${v.features}, this product fits naturally into daily routines and different usage scenarios.
+
+3. MULTIPLE USE SCENARIOS
+Great for home, office, travel, outdoor use, personal use, gifting and many other situations.
+
+4. CUSTOMER BENEFIT FOCUSED
+Helps customers save time, improve convenience and enjoy a better product experience with less effort.
+
+5. IDEAL GIFT OPTION
+A useful and thoughtful choice for friends, family, coworkers or anyone looking for a practical and reliable product.`;
+    }
+
+    function generateDescription(v) {
+      return `PRODUCT DESCRIPTION GENERATOR
+Product: ${v.productName}
+Tone: ${v.tone}
+
+DESCRIPTION:
+Discover a better way to enjoy everyday convenience with ${v.productName}. Created for modern customers who value quality, usability and style, this product is suitable for a wide range of daily scenarios.
+
+Featuring ${v.features}, it is designed to deliver practical value and a reliable experience. Whether you are shopping for yourself or looking for a useful gift, ${v.productName} is a smart choice.
+
+WHY CUSTOMERS LIKE IT:
+- Easy to use
+- Practical for daily life
+- Suitable for multiple scenarios
+- Designed with customer needs in mind
+- Great balance of function and value
+
+CALL TO ACTION:
+Choose ${v.productName} today and make your daily routine easier, smarter and more enjoyable.`;
+    }
+
+    function generateDetailPage(v) {
+      return `PRODUCT DETAIL PAGE GENERATOR
+Product: ${v.productName}
+Platform: ${v.platform}
+
+HERO SECTION:
+Headline:
+Make Everyday Life Easier with ${v.productName}
+
+Subheadline:
+A practical, reliable and stylish product designed for modern daily use.
+
+CTA:
+Shop Now
+
+SECTION 1 - CORE BENEFITS:
+- Designed for everyday convenience
+- Built with ${v.features}
+- Suitable for home, office, travel and gifting
+- Easy to use and simple to maintain
+
+SECTION 2 - CUSTOMER PAIN POINTS:
+Tired of products that are difficult to use, low quality or not suitable for real daily needs? ${v.productName} is created to solve these problems with a practical and customer-focused design.
+
+SECTION 3 - USE SCENARIOS:
+Use it at home, take it to work, bring it while traveling, or give it as a thoughtful gift. It fits naturally into different lifestyles and routines.
+
+SECTION 4 - PRODUCT HIGHLIGHTS:
+- Premium feel
+- Durable structure
+- Practical function
+- Clean design
+- Good value for money
+
+FAQ:
+Q: Is this product suitable for daily use?
+A: Yes, it is designed for regular daily use.
+
+Q: Can it be used as a gift?
+A: Yes, it is a practical and thoughtful gift option.
+
+Q: Which platform is this content suitable for?
+A: This content can be adapted for ${v.platform}, landing pages, Shopify stores or Amazon A+ content.`;
+    }
+
+    function generateKeywords(v) {
+      return `KEYWORD GENERATOR
+Product: ${v.productName}
+Platform: ${v.platform}
+
+CORE KEYWORDS:
+- ${v.productName}
+- premium ${v.productName}
+- best ${v.productName}
+- high quality ${v.productName}
+- durable ${v.productName}
+
+LONG-TAIL KEYWORDS:
+- ${v.productName} for home use
+- ${v.productName} for office
+- ${v.productName} for travel
+- ${v.productName} gift for family
+- easy to use ${v.productName}
+- practical ${v.productName} for daily life
+
+AUDIENCE KEYWORDS:
+- for women
+- for men
+- for family
+- for students
+- for office workers
+- for travelers
+
+USE-CASE KEYWORDS:
+- home
+- office
+- travel
+- outdoor
+- gift
+- daily use
+
+EXTRA KEYWORDS FROM USER:
+${v.extra}`;
+    }
+
+    function generateImagePrompt(v) {
+      return `AI IMAGE PROMPT GENERATOR
+Product: ${v.productName}
+Tone: ${v.tone}
+
+LIFESTYLE PRODUCT PHOTO PROMPT:
+A high-quality commercial product photo of ${v.productName}, showcasing ${v.features}, placed in a clean modern lifestyle environment, soft natural lighting, realistic shadows, premium composition, highly detailed, professional e-commerce photography, 4K, realistic style.
+
+WHITE BACKGROUND PRODUCT IMAGE PROMPT:
+${v.productName} isolated on pure white background, centered composition, sharp focus, realistic texture, studio lighting, clean product photography, e-commerce product image, high resolution.
+
+SOCIAL MEDIA AD IMAGE PROMPT:
+A visually attractive advertising image for ${v.productName}, modern background, lifestyle setting, premium and persuasive mood, clear product focus, suitable for Instagram, Facebook ads and TikTok Shop promotion.
+
+SHOPIFY HERO IMAGE PROMPT:
+A premium hero banner featuring ${v.productName}, elegant composition, soft gradient background, space for headline text on one side, modern e-commerce website style, high-end product photography.`;
+    }
+
+    function generateCompetitorAnalysis(v) {
+      return `COMPETITOR LISTING ANALYZER
+Product: ${v.productName}
+Platform: ${v.platform}
+
+INPUT / COMPETITOR INFORMATION:
+${v.extra}
+
+ANALYSIS SUMMARY:
+The competitor listing appears to focus on basic product features, but it can be improved by making the benefits clearer, adding stronger use scenarios and including more customer-focused language.
+
+TITLE STRUCTURE SUGGESTION:
+Main Keyword + Important Feature + Main Benefit + Use Scenario + Audience
+
+SELLING POINTS TO HIGHLIGHT:
+1. Product quality and durability
+2. Convenience for daily use
+3. Specific use scenarios such as home, office, travel or gifting
+4. Customer benefits instead of only technical features
+5. Trust-building phrases such as reliable, practical and easy to use
+
+IMPROVEMENT IDEAS:
+- Add more long-tail keywords naturally
+- Turn features into benefits
+- Make bullet points easier to scan
+- Use stronger emotional purchase reasons
+- Add gift and lifestyle scenarios
+
+SUGGESTED ANGLE:
+Position ${v.productName} as a practical, high-value and reliable choice for customers who want convenience, quality and everyday usability.`;
+    }
+
+    function clearForm() {
+      document.getElementById("productName").value = "";
+      document.getElementById("featuresInput").value = "";
+      document.getElementById("extraInput").value = "";
+      document.getElementById("resultBox").textContent = "Your generated content will appear here.";
     }
 
     function copyResult() {
-      const text = document.getElementById("result").innerText;
-      navigator.clipboard.writeText(text);
-      alert("已复制生成结果");
+      const text = document.getElementById("resultBox").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied!");
+      }).catch(() => {
+        alert("Copy failed. Please select the text manually.");
+      });
     }
   </script>
+
 </body>
 </html>
