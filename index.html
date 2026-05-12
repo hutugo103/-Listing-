@@ -12,15 +12,21 @@
       --card: #ffffff;
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
+      --accent: #06b6d4;
+      --success: #10b981;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
       --soft: #eff6ff;
       --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 30px 80px rgba(15, 23, 42, 0.12);
       --radius: 22px;
+      --gradient: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -28,26 +34,27 @@
       background:
         radial-gradient(circle at top left, rgba(37,99,235,0.12), transparent 28%),
         radial-gradient(circle at top right, rgba(14,165,233,0.12), transparent 28%),
+        radial-gradient(circle at bottom center, rgba(139,92,246,0.08), transparent 35%),
         var(--bg);
       color: var(--text);
+      min-height: 100vh;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
 
     .container {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
+    /* ===== Header ===== */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
       background: rgba(255,255,255,0.78);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(226,232,240,0.8);
     }
 
@@ -70,11 +77,12 @@
       width: 40px;
       height: 40px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #2563eb, #38bdf8);
+      background: var(--gradient);
       color: white;
       display: grid;
       place-items: center;
       box-shadow: 0 14px 30px rgba(37, 99, 235, 0.28);
+      font-size: 14px;
     }
 
     .nav-links {
@@ -85,19 +93,41 @@
       font-size: 14px;
     }
 
-    .nav-links a:hover {
-      color: var(--primary);
+    .nav-links a {
+      position: relative;
+      transition: color 0.2s;
     }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { width: 100%; }
 
     .nav-btn {
-      padding: 12px 18px;
+      padding: 12px 22px;
       border-radius: 999px;
-      background: var(--primary);
+      background: var(--gradient);
       color: white;
       font-weight: 800;
-      box-shadow: 0 12px 25px rgba(37,99,235,0.25);
+      box-shadow: 0 12px 25px rgba(37,99,235,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(37,99,235,0.4);
+    }
+
+    /* ===== Hero ===== */
     .hero {
       padding: 82px 0 54px;
       text-align: center;
@@ -109,12 +139,29 @@
       gap: 8px;
       background: white;
       border: 1px solid var(--border);
-      padding: 9px 15px;
+      padding: 9px 18px;
       border-radius: 999px;
       color: var(--primary);
       font-weight: 800;
+      font-size: 13px;
       box-shadow: 0 10px 30px rgba(15,23,42,0.06);
       margin-bottom: 22px;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .badge::before {
+      content: "✨";
+      font-size: 14px;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero h1 {
@@ -122,11 +169,13 @@
       line-height: 1.05;
       margin: 0;
       letter-spacing: -2px;
+      animation: fadeInUp 0.8s ease-out;
     }
 
     .gradient-text {
-      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      background: var(--gradient);
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
@@ -136,6 +185,7 @@
       color: var(--muted);
       font-size: 18px;
       line-height: 1.8;
+      animation: fadeInUp 1s ease-out;
     }
 
     .hero-actions {
@@ -144,27 +194,31 @@
       justify-content: center;
       gap: 14px;
       flex-wrap: wrap;
+      animation: fadeInUp 1.2s ease-out;
     }
 
     .btn {
       border: none;
       cursor: pointer;
       border-radius: 14px;
-      padding: 14px 20px;
+      padding: 14px 24px;
       font-weight: 900;
       font-size: 15px;
-      transition: 0.2s;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: var(--gradient);
       color: white;
       box-shadow: 0 16px 30px rgba(37,99,235,0.25);
     }
 
     .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(37,99,235,0.35);
     }
 
     .btn-secondary {
@@ -176,20 +230,21 @@
     .btn-secondary:hover {
       border-color: var(--primary);
       color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(37,99,235,0.12);
     }
 
-    .section {
-      padding: 48px 0;
-    }
+    /* ===== Section ===== */
+    .section { padding: 48px 0; }
 
     .section-title {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 36px;
     }
 
     .section-title h2 {
       margin: 0;
-      font-size: 34px;
+      font-size: 36px;
       letter-spacing: -1px;
     }
 
@@ -197,8 +252,12 @@
       color: var(--muted);
       margin-top: 12px;
       font-size: 16px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
+    /* ===== Tools Grid ===== */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -206,31 +265,53 @@
     }
 
     .tool-card {
+      position: relative;
       background: rgba(255,255,255,0.88);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 24px;
       box-shadow: 0 10px 30px rgba(15,23,42,0.05);
-      transition: 0.2s;
+      transition: all 0.3s;
       cursor: pointer;
       min-height: 190px;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
     }
 
     .tool-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
       border-color: rgba(37,99,235,0.35);
     }
 
+    .tool-card:hover::before { transform: scaleX(1); }
+
     .icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 15px;
       background: var(--soft);
       display: grid;
       place-items: center;
-      font-size: 22px;
+      font-size: 24px;
       margin-bottom: 18px;
+      transition: transform 0.3s;
+    }
+
+    .tool-card:hover .icon {
+      transform: scale(1.1) rotate(-5deg);
     }
 
     .tool-card h3 {
@@ -245,6 +326,7 @@
       font-size: 14px;
     }
 
+    /* ===== Features ===== */
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -256,14 +338,24 @@
       background: white;
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 22px;
+      padding: 26px;
       box-shadow: 0 8px 25px rgba(15,23,42,0.04);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
     }
 
     .feature strong {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-size: 18px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .feature span {
@@ -272,36 +364,47 @@
       font-size: 14px;
     }
 
+    /* ===== App Panel ===== */
     .app-panel {
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.92);
       border: 1px solid var(--border);
       border-radius: 28px;
       box-shadow: var(--shadow);
-      padding: 28px;
+      padding: 32px;
+      backdrop-filter: blur(8px);
     }
 
     .tabs {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      padding-bottom: 22px;
+      border-bottom: 1px dashed var(--border);
     }
 
     .tab {
       border: 1px solid var(--border);
       background: white;
       color: #334155;
-      padding: 11px 16px;
+      padding: 11px 18px;
       border-radius: 999px;
       cursor: pointer;
       font-weight: 800;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
     .tab.active {
-      background: var(--primary);
+      background: var(--gradient);
       color: white;
-      border-color: var(--primary);
-      box-shadow: 0 12px 25px rgba(37,99,235,0.2);
+      border-color: transparent;
+      box-shadow: 0 12px 25px rgba(37,99,235,0.25);
     }
 
     .form-grid {
@@ -319,18 +422,22 @@
 
     label {
       font-weight: 900;
-      font-size: 14px;
+      font-size: 13px;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     input, select, textarea {
       width: 100%;
       border: 1px solid #cbd5e1;
       border-radius: 14px;
-      padding: 14px 15px;
+      padding: 14px 16px;
       font-size: 15px;
       background: white;
       outline: none;
-      transition: 0.2s;
+      transition: all 0.2s;
+      font-family: inherit;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -341,29 +448,33 @@
     textarea {
       min-height: 120px;
       resize: vertical;
+      line-height: 1.6;
     }
 
-    .full {
-      grid-column: 1 / -1;
-    }
+    .full { grid-column: 1 / -1; }
 
     .upload-box {
       border: 2px dashed #bfdbfe;
-      background: #f8fbff;
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
       border-radius: 20px;
-      padding: 26px;
+      padding: 32px;
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.25s;
+      display: block;
     }
 
     .upload-box:hover {
       background: #eff6ff;
       border-color: var(--primary);
+      transform: scale(1.005);
     }
 
-    .upload-box input {
-      display: none;
+    .upload-box input { display: none; }
+
+    .upload-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
     }
 
     .upload-title {
@@ -391,15 +502,23 @@
       border-radius: 16px;
       border: 1px solid var(--border);
       box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+      transition: transform 0.2s;
+    }
+
+    .preview-images img:hover {
+      transform: scale(1.05);
     }
 
     .actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 6px;
+      margin-top: 8px;
+      padding-top: 22px;
+      border-top: 1px dashed var(--border);
     }
 
+    /* ===== Result Layout ===== */
     .result-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -411,28 +530,40 @@
       background: white;
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 22px;
+      padding: 24px;
       box-shadow: 0 10px 30px rgba(15,23,42,0.05);
     }
 
     .result-box h3, .detail-preview h3 {
       margin-top: 0;
       font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
+    .result-box h3::before { content: "📋"; }
+    .detail-preview h3::before { content: "👁️"; }
 
     pre {
       white-space: pre-wrap;
       word-break: break-word;
-      background: #0f172a;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: #dbeafe;
       border-radius: 18px;
-      padding: 20px;
+      padding: 22px;
       line-height: 1.8;
       max-height: 520px;
       overflow: auto;
       font-size: 14px;
+      font-family: "SF Mono", "Monaco", "Consolas", monospace;
     }
 
+    pre::-webkit-scrollbar { width: 8px; }
+    pre::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 8px; }
+    pre::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 8px; }
+
+    /* ===== Product Page ===== */
     .product-page {
       border-radius: 20px;
       overflow: hidden;
@@ -454,6 +585,7 @@
     .product-hero p {
       color: var(--muted);
       line-height: 1.7;
+      margin: 0;
     }
 
     .product-gallery {
@@ -468,10 +600,16 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 16px;
+      transition: transform 0.3s;
     }
 
-    .product-content {
-      padding: 24px;
+    .product-gallery img:hover { transform: scale(1.03); }
+
+    .product-content { padding: 24px; }
+
+    .product-content h3 {
+      margin: 18px 0 12px;
+      font-size: 18px;
     }
 
     .bullet-list {
@@ -479,74 +617,85 @@
       gap: 12px;
       padding: 0;
       list-style: none;
+      margin: 0;
     }
 
     .bullet-list li {
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px 14px;
+      padding: 13px 16px;
       color: #334155;
+      transition: all 0.2s;
+    }
+
+    .bullet-list li:hover {
+      background: #eff6ff;
+      transform: translateX(4px);
     }
 
     .pill-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
     .pill {
       background: #eff6ff;
       color: #1d4ed8;
-      padding: 7px 11px;
+      padding: 7px 12px;
       border-radius: 999px;
       font-size: 13px;
       font-weight: 800;
+      transition: transform 0.2s;
     }
 
+    .pill:hover { transform: translateY(-2px); }
+
+    /* ===== Toast ===== */
+    .toast {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      background: var(--gradient);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 14px;
+      box-shadow: 0 20px 40px rgba(37,99,235,0.3);
+      font-weight: 800;
+      font-size: 14px;
+      z-index: 100;
+      transform: translateX(400px);
+      transition: transform 0.3s ease-out;
+    }
+
+    .toast.show { transform: translateX(0); }
+
+    /* ===== Footer ===== */
     footer {
       padding: 40px 0;
       color: var(--muted);
       text-align: center;
       border-top: 1px solid var(--border);
       margin-top: 40px;
+      background: rgba(255,255,255,0.5);
     }
 
+    /* ===== Responsive ===== */
     @media (max-width: 980px) {
-      .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .form-grid, .result-layout, .features {
-        grid-template-columns: 1fr;
-      }
-
-      .preview-images {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .nav-links {
-        display: none;
-      }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-grid, .result-layout, .features { grid-template-columns: 1fr; }
+      .preview-images { grid-template-columns: repeat(3, 1fr); }
+      .nav-links { display: none; }
     }
 
     @media (max-width: 600px) {
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 54px;
-      }
-
-      .app-panel {
-        padding: 18px;
-      }
-
-      .preview-images {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .tools-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 54px; }
+      .app-panel { padding: 20px; }
+      .preview-images { grid-template-columns: repeat(2, 1fr); }
+      .section-title h2 { font-size: 28px; }
     }
   </style>
 </head>
@@ -581,7 +730,7 @@
       </p>
 
       <div class="hero-actions">
-        <a href="#generator" class="btn btn-primary">开始生成详情页</a>
+        <a href="#generator" class="btn btn-primary">🚀 开始生成详情页</a>
         <a href="#tools" class="btn btn-secondary">查看全部工具</a>
       </div>
     </section>
@@ -654,17 +803,17 @@
 
         <div class="features">
           <div class="feature">
-            <strong>产品图片上传</strong>
+            <strong>📸 产品图片上传</strong>
             <span>上传产品主图、细节图和场景图，快速生成可视化详情页预览，让内容展示更接近真实电商页面。</span>
           </div>
 
           <div class="feature">
-            <strong>详情页内容生成</strong>
+            <strong>✍️ 详情页内容生成</strong>
             <span>围绕产品卖点、使用场景、目标人群和购买理由，生成适合亚马逊、Shopify 和独立站使用的页面内容。</span>
           </div>
 
           <div class="feature">
-            <strong>SEO 与转化优化</strong>
+            <strong>🎯 SEO 与转化优化</strong>
             <span>自动整理核心关键词、长尾关键词和买家搜索词，帮助产品页面提升搜索覆盖和购买转化率。</span>
           </div>
         </div>
@@ -744,6 +893,7 @@
               <label>上传产品图片</label>
               <label class="upload-box">
                 <input id="imageUpload" type="file" accept="image/*" multiple />
+                <div class="upload-icon">📤</div>
                 <div class="upload-title">点击上传产品图片</div>
                 <div class="upload-note">支持上传多张产品图，用于生成详情页预览和内容参考。</div>
               </label>
@@ -752,16 +902,16 @@
           </div>
 
           <div class="actions">
-            <button class="btn btn-primary" onclick="generateContent()">生成内容</button>
-            <button class="btn btn-secondary" onclick="copyResult()">复制生成结果</button>
-            <button class="btn btn-secondary" onclick="downloadDetailPage()">下载详情页 HTML</button>
-            <button class="btn btn-secondary" onclick="clearForm()">清空</button>
+            <button class="btn btn-primary" onclick="generateContent()">✨ 生成内容</button>
+            <button class="btn btn-secondary" onclick="copyResult()">📋 复制生成结果</button>
+            <button class="btn btn-secondary" onclick="downloadDetailPage()">💾 下载详情页 HTML</button>
+            <button class="btn btn-secondary" onclick="clearForm()">🗑️ 清空</button>
           </div>
 
           <div class="result-layout">
             <div class="result-box">
               <h3>生成结果</h3>
-              <pre id="result">请先填写产品信息，然后点击“生成内容”。</pre>
+              <pre id="result">请先填写产品信息，然后点击"生成内容"。</pre>
             </div>
 
             <div class="detail-preview">
@@ -776,7 +926,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -784,14 +933,23 @@
 
   <footer>
     <div class="container">
-      © 2025 AI Listing Pro · 为跨境电商卖家打造的 AI 内容生成工具
+      © 2026 AI Listing Pro · 为跨境电商卖家打造的 AI 内容生成工具
     </div>
   </footer>
+
+  <div class="toast" id="toast">操作成功</div>
 
   <script>
     let currentTool = "listing";
     let uploadedImages = [];
     let lastDetailHTML = "";
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
 
     function setTool(tool) {
       currentTool = tool;
@@ -808,43 +966,44 @@
 
       files.forEach(file => {
         const reader = new FileReader();
-
         reader.onload = function(e) {
           uploadedImages.push(e.target.result);
-
           const img = document.createElement("img");
           img.src = e.target.result;
           document.getElementById("previewImages").appendChild(img);
         };
-
         reader.readAsDataURL(file);
       });
     });
 
+    // ✅ 修复1：补全闭合括号
     function getFormData() {
       return {
         name: document.getElementById("productName").value.trim() || "Premium Product",
         platform: document.getElementById("platform").value,
- market: document.getElementById("market").value,
+        market: document.getElementById("market").value,
         tone: document.getElementById("tone").value,
         features: document.getElementById("featuresInput").value.trim() || "高品质材料，耐用设计，适合日常使用，提升生活效率。",
         keywords: document.getElementById("keywordsInput").value.trim() || "premium product, high quality, daily use"
- };
+      };
     }
 
+    // ✅ 修复2：补全 .trim() 和 .filter() 的括号
     function splitItems(text) {
       return text
         .split(/[,，\n]/)
-        .map(item => item.trim        .filter(Boolean);
+        .map(item => item.trim())
+        .filter(Boolean);
     }
 
+    // ✅ 修复3：修复 else (...) 错误为 else if (...)
     function generateContent() {
       const data = getFormData();
       let output = "";
 
       if (currentTool === "title") {
         output = generateTitle(data);
-      } else (currentTool === "bullets") {
+      } else if (currentTool === "bullets") {
         output = generateBullets(data);
       } else if (currentTool === "description") {
         output = generateDescription(data);
@@ -854,12 +1013,15 @@
         output = generateKeywords(data);
       } else if (currentTool === "image") {
         output = generateImagePrompts(data);
-      } else (currentTool === "competitor") {
-        output = generateCompetitor(data);
+      } else if (currentTool === "competitor") {
+        output = generateCompetitorAnalysis(data);
       } else {
         output = generateListing(data);
-           document.getElementById("result").textContent = output;
+      }
+
+      document.getElementById("result").textContent = output;
       renderDetailPreview(data);
+      showToast("✨ 生成成功");
     }
 
     function generateTitle(data) {
@@ -941,11 +1103,12 @@ ${data.keywords}
 - 核心卖点卡片
 - 场景使用图
 - 详细参数
-- 买家见问题
+- 买家常见问题
 - 强转化购买按钮`;
     }
 
-    function generateKeywords) {
+    // ✅ 修复4：补全函数参数 (data)
+    function generateKeywords(data) {
       const base = splitItems(data.keywords);
       const name = data.name.toLowerCase();
 
@@ -995,6 +1158,7 @@ Instagram style product photo of ${data.name}, modern lifestyle, soft shadows, e
 Close-up details of ${data.name}, showing material quality, texture, craftsmanship, premium finish, macro product photography`;
     }
 
+    // ✅ 修复5：函数名与调用名统一
     function generateCompetitorAnalysis(data) {
       return `【竞争对手分析】
 
@@ -1014,7 +1178,7 @@ ${data.platform}
 你的优化方向：
 1. 标题中突出核心关键词 + 使用场景
 2. 图片展示主图、细节图、场景图和对比图
-3. 卖点要写“用户能得到什么好处”
+3. 卖点要写"用户能得到什么好处"
 4. 详情页增加品牌感和模块化结构
 5. 描述中自然加入关键词：${data.keywords}
 
@@ -1094,13 +1258,14 @@ ${generateKeywords(data)}`;
     function copyResult() {
       const text = document.getElementById("result").textContent;
       navigator.clipboard.writeText(text).then(() => {
-        alert("生成结果已复制");
+        showToast("📋 生成结果已复制");
+      }).catch(() => {
+        showToast("复制失败，请手动复制");
       });
     }
 
     function downloadDetailPage() {
       const data = getFormData();
-
       if (!lastDetailHTML) {
         renderDetailPreview(data);
       }
@@ -1142,6 +1307,7 @@ ${lastDetailHTML}
       a.download = `${data.name || "product-detail-page"}.html`;
       a.click();
       URL.revokeObjectURL(url);
+      showToast("💾 HTML 已下载");
     }
 
     function clearForm() {
@@ -1150,7 +1316,7 @@ ${lastDetailHTML}
       document.getElementById("keywordsInput").value = "";
       document.getElementById("imageUpload").value = "";
       document.getElementById("previewImages").innerHTML = "";
-      document.getElementById("result").textContent = "请先填写产品信息，然后点击“生成内容”。";
+      document.getElementById("result").textContent = '请先填写产品信息，然后点击"生成内容"。';
       document.getElementById("detailPreview").innerHTML = `
         <div class="product-page">
           <div class="product-hero">
@@ -1160,6 +1326,7 @@ ${lastDetailHTML}
         </div>`;
       uploadedImages = [];
       lastDetailHTML = "";
+      showToast("🗑️ 已清空");
     }
 
     function escapeHTML(str) {
